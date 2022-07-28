@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>(Un)involved voter model</title>
+			<link href='http://fonts.googleapis.com/css?family=Merriweather+Sans:400,700' rel='stylesheet' type='text/css'>
+			<style>
+				* {
+					padding:0;
+					margin:0;
+					font-family:'source-sans-pro',sans-serif;
+					color:#EFEFEF;
+				}
+				body, html {
+					min-height:100%;
+					overflow:auto;
+					background-color:#222222;
+					text-align:center;
+				}
+				button {
+				  color: black;
+				}
+				#canvas {
+					margin-top:20px;
+				}
+				.smoothie-chart-tooltip {
+          background: #999;
+          padding: 1em;
+          margin-top: 20px;
+          font-family: consolas;
+          color: white;
+          font-size: 13px;
+          pointer-events: none;
+        }
+        .controls {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          height: 20vh;
+          width: 90%;
+          margin: 0 auto;
+        }
+        .control {
+          margin: 10px 10px;
+        }
+			</style>
+			<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+			<script type="text/javascript" src="smoothie.js"></script>
+	</head>
+	<body>
+		<br>
+		<br>
+		<h1>The 2D <a href="https://damonbinder.github.io/articles/SM/">(Un)involved voter model</a>: A Metropolis Algorithm</h1>
+		<br>
+		<h3>By <a href="https://damonbinder.github.io/">HvdM</a></h3>
+		<canvas id="canvas">
+			You need a modern browser which supports HTML5 canvas to view this.
+		</canvas>
+		<br>
+		<canvas id="graph" width="1200" height="100"></canvas>
+
+		<div class="controls">
+		  <div class="control">
+		    <label>Lambda: </label><span id="ldisplay"></span><br><input style="width:400px;" type="range" name="lambda" id="lambda" min="0" max="1" value=".7" step="0.01">
+		  </div>
+		  <div class="control">
+		    <label>Epsilon: </label><span id="edisplay"></span><br><input style="width:400px;" type="range" name="epsilon" id="epsilon" min="0" max="1" value="0.1" step="0.01">
+		  </div>
+		  <div class="control">
+		    <label>Alpha: </label><span id="adisplay"></span><br><input style="width:400px;" type="range" name="alpha" id="alpha" min="0" max="0.05" value="0.0" step="0.0001">
+		  </div>
+		  <div class="control">
+		    <label>States: </label><span id="stdisplay"></span><br><input style="width:400px;" type="range" name="states" id="states" min="3" max="15" value="5" step="2" onchange="reset()">
+		  </div>
+		  <div class="control">
+		    <label>slowmotion: </label><span id="sdisplay"></span><br><input style="width:400px;" type="range" name="slow" id="slow" min="0" max="1" value="0" step="0.01" onchange="slowDown()">
+		  </div>
+		  <div class="control">
+		    <div>
+    			<input type="radio" id="radio-lattice" name="meanfield" value="lattice" checked style="margin: 10px" />
+    			<label for="radio-lattice">2D lattice </label>
+    		</div>
+    		<div>
+    			<input type="radio" id="radio-fullnetwork" name="meanfield" value="full" style="margin: 10px" />
+    			<label for="radio-metro">Fully connected network</label>
+		</div>
+		  </div>
+		</div>
+		<button onclick="pausePlay()" id="glauber-go-button">Go</button>
+		<button onclick="reset()" id="glauber-go-button">Reset</button>
+		<script type="text/javascript" src="./uninvolved_voter.js"></script>
+	</body>
+</html>
+
