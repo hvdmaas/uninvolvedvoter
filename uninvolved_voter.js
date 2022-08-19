@@ -37,6 +37,7 @@ function neighbours3(x,y) {
 
 var lambda = 0.7;
 var epsilon = 0.1;
+var bias = 0.1;
 var alpha = 0;
 var numStates = 5;
 var slow = 0;
@@ -129,6 +130,8 @@ function mainLoop() {
 	$("#edisplay").html(epsilon+"");
 	alpha = parseFloat($("#alpha").val());
 	$("#adisplay").html(alpha+"");
+	bias = parseFloat($("#bias").val());
+	$("#bdisplay").html(bias+"");
 	numStates = parseFloat($("#states").val());
 	$("#stdisplay").html(numStates+"");
 	lattice = $('#radio-lattice')[0].checked;
@@ -153,16 +156,19 @@ function mainLoop() {
 		neigh = grid[x][y];
 		state = grid[x0][y0];
 
-		if ( Math.abs(neigh)==(Math.abs(state)+1) ) {
+//		if ( Math.abs(neigh)==(Math.abs(state)+1) ) {
+		if ( Math.abs(neigh)==(Math.abs(state)+1) & Math.abs(state - neigh) == 1 ) {
 		  if (Math.random() < lambda) {
 				grid[x0][y0] = neigh; 
 			} else {
 			  grid[x][y] = state;
 			}
 		}
-		if (state !== 0 && Math.random() < epsilon) {
+		
+		if (state !== 0 && Math.random() < epsilon + Math.abs(bias) * (Math.sign (grid[x0][y0]) * Math.sign (bias) + 1)/-2) {
 			grid[x0][y0] = grid[x0][y0] - Math.sign (grid[x0][y0]);
 		}
+		
 	  if(neigh==state && Math.random() < alpha && Math.abs(state) < (numStates-1) / 2 && state !== 0) {
 				grid[x0][y0] = grid[x0][y0] + Math.sign (grid[x0][y0]);
 	  }
